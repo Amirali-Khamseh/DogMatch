@@ -15,7 +15,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Nav />
-          <div className="container mx-auto p-10">{children}</div>
+          <div className="container mx-auto mt-[64px]">{children}</div>
         </Providers>
       </body>
     </html>

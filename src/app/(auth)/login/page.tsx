@@ -1,5 +1,10 @@
 import React from "react";
+import LoginForm from "./LoginForm";
 
 export default function page() {
-  return <div>Login</div>;
+  return (
+    <div className="flex justify-center align-center mt-[25vh]">
+      <LoginForm />
+    </div>
+  );
 }
