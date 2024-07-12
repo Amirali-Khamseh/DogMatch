@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <main className="">
-      <Button size="md">Medium</Button>
-    </main>
-  );
+  return <main>Main page</main>;
 }
