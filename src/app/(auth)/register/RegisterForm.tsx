@@ -22,7 +22,7 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
   } = useForm<RegisterSchema>({
-    // resolver: zodResolver(registerSchema),
+    resolver: zodResolver(registerSchema),
     mode: "onTouched",
   });
   const onSubmit = async (data: RegisterSchema) => {
@@ -76,7 +76,7 @@ export default function RegisterForm() {
             />
             {errors.root?.ServerError && (
               <p className="text-danger text-sm">
-                {errors.root.serverError.message}
+                {errors.root.ServerError.message}
               </p>
             )}
             <Button
