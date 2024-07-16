@@ -18,26 +18,22 @@ export async function signInUser(
       password: data.password,
       redirect: false,
     });
-    console.log(result);
     return { status: "success", data: "Logged in" };
   } catch (error) {
-    console.log(error);
     if (error instanceof AuthError) {
       switch (error.type) {
+        case "CallbackRouteError":
+          return { status: "error", error: "Invalid credentials." };
         case "CredentialsSignin":
           return { status: "error", error: "Invalid credentials." };
-          break;
         default:
           return {
             status: "error",
-            error: "Something went wrong with Authentication. ",
+            error: "Something went wrong while authenticating.",
           };
       }
     } else {
-      return {
-        status: "error",
-        error: "Something went wrong while logging in.",
-      };
+      return { status: "error", error: "Something went wrong." };
     }
   }
 }
