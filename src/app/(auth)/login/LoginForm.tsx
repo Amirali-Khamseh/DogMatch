@@ -6,18 +6,26 @@ import { useForm } from "react-hook-form";
 import { any } from "zod";
 import { loginSchema, LoginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signInUser } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
   });
-  const onSubmit = (data: LoginSchema) => {
-    console.log(data);
+  const onSubmit = async (data: LoginSchema) => {
+    const result = await signInUser(data);
+    if (result.status === "success") {
+      router.push("/members");
+    } else {
+      console.log(result.error);
+    }
   };
   return (
     <Card className="w-2/5 mx-auto ">
@@ -48,6 +56,7 @@ export default function LoginForm() {
               type="submit"
               variant="flat"
               color="success"
+              isLoading={isSubmitting}
             >
               Login
             </Button>
