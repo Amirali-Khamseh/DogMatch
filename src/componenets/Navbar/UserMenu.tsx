@@ -25,7 +25,7 @@ export default function UserMenu({ user }: Props) {
           isBordered
           as="button"
           className="transition-transform"
-          name={user?.name || "user avatar"}
+          name={user?.name || "User"}
           size="sm"
           src={user?.image || "/Navbar/avatar.png"}
         />

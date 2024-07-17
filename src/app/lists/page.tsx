@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function page() {
-  return <div>page</div>;
+  return <div>Lists page </div>;
 }
