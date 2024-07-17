@@ -10,8 +10,11 @@ import Link from "next/link";
 import React from "react";
 import { PiDogBold } from "react-icons/pi";
 import NavLink from "./NavLink";
+import UserMenu from "./UserMenu";
+import { auth } from "@/auth";
 
-export default function Nav() {
+export default async function Nav() {
+  const session = await auth();
   return (
     <Navbar maxWidth="xl">
       {/*The Logo*/}
@@ -30,12 +33,18 @@ export default function Nav() {
       </NavbarContent>
       {/*Right hand side of nav*/}
       <NavbarContent justify="end">
-        <Button variant="bordered" as={Link} href="/login">
-          Login
-        </Button>
-        <Button variant="bordered" as={Link} href="/register">
-          Register
-        </Button>
+        {session?.user ? (
+          <UserMenu user={session.user} />
+        ) : (
+          <>
+            <Button variant="bordered" as={Link} href="/login">
+              Login
+            </Button>
+            <Button variant="bordered" as={Link} href="/register">
+              Register
+            </Button>
+          </>
+        )}
       </NavbarContent>
     </Navbar>
   );
