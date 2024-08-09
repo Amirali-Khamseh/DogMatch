@@ -7,7 +7,8 @@ datasource db {
   provider = "postgresql"
   url     = env("DATABASE_URL")
 }
- 
+ //Only for signin and registration 
+ //User <--> Member (one-to-one)
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -20,6 +21,7 @@ model User {
   updatedAt DateTime @updatedAt
   member Member?
 }
+
 model Member{
 id String @id @default(cuid())
 userId String @unique
@@ -35,6 +37,8 @@ image String?
 user User @relation(fields: [userId],references: [id],onDelete:Cascade)
 photos Photo[]
 }
+//One Member can have many Photos
+// Member<--> Photo (one-to-many)
 model Photo{
   id String @id @default(cuid())
   url String
@@ -42,6 +46,8 @@ model Photo{
   memberId String
   member Member @relation(fields: [memberId],references: [id],onDelete: Cascade)
 }
+ //For generating token and storing the related data of token and session  
+ //User <--> Account (one-to-one)
 model Account {
   userId            String
   type              String
