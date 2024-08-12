@@ -36,6 +36,8 @@ country String
 image String?
 user User @relation(fields: [userId],references: [id],onDelete:Cascade)
 photos Photo[]
+sourceLikes Like[] @relation("source")
+targetLikes Like[] @relation("target")
 }
 //One Member can have many Photos
 // Member<--> Photo (one-to-many)
@@ -68,4 +70,15 @@ model Account {
  
   @@id([provider, providerAccountId])
 }
+//For Kepping track of the Likes between users 
+//Member can like many other users <--> Many users can like one user (Many-to-Many) 
+model Like {
+  sourceUserId String
+  sourceMember Member @relation("source", fields: [sourceUserId], references: [userId], onDelete: Cascade)
 
+  targetUserId String
+  targetMember Member @relation("target", fields: [targetUserId], references: [userId], onDelete: Cascade)
+  
+  //Primary key of this table
+  @@id([sourceUserId, targetUserId])
+}
