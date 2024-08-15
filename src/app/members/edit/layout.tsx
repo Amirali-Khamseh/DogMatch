@@ -1,23 +1,17 @@
-import { getMemberByUserId } from "@/app/actions/membersAction";
 import { ReactNode } from "react";
 import MemberSidebar from "../MemberSidebar";
 import { notFound } from "next/navigation";
 import { Card } from "@nextui-org/react";
+import { getMemberByUserId } from "@/app/actions/membersAction";
+import { getAuthUserId } from "@/app/actions/authActions";
 
-export default async function Layout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: { userId: string };
-}) {
-  const member = await getMemberByUserId(params.userId);
-  const basePath = `/members/${member?.userId}`;
-
+export default async function Layout({ children }: { children: ReactNode }) {
+  const userId = await getAuthUserId();
+  const member = await getMemberByUserId(userId);
+  const basePath = `/members/edit`;
   const navLinks = [
-    { name: "Profile", href: `${basePath}` },
-    { name: "Photos", href: `${basePath}/photos` },
-    { name: "Chat", href: `${basePath}/chat` },
+    { name: "Edit Profile", href: `${basePath}` },
+    { name: "Update Photos", href: `${basePath}/photos` },
   ];
   if (!member) return notFound();
   return (
