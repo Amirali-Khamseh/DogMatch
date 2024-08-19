@@ -8,6 +8,7 @@ import PinButton from "@/componenets/ProfilePhotos/PinButton";
 
 import { CardHeader, Divider, CardBody, Image } from "@nextui-org/react";
 import React from "react";
+import MemberPhotoUpload from "./MemberPhotoUpload";
 
 export default async function page() {
   const userId = await getAuthUserId();
@@ -18,6 +19,9 @@ export default async function page() {
       <CardHeader className="text-xl font-semibold">Gallery</CardHeader>
       <Divider />
       <CardBody>
+        <div className="pt-5 pl-5">
+          <MemberPhotoUpload />
+        </div>
         <div className="grid grid-cols-5 gap-3 p-5">
           {photos &&
             photos.map((photo) => (
