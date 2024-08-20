@@ -12,9 +12,11 @@ import { PiDogBold } from "react-icons/pi";
 import NavLink from "./NavLink";
 import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
+import { getUserInfoForNav } from "@/app/actions/useActions";
 
 export default async function Nav() {
   const session = await auth();
+  const userInfo = session?.user && (await getUserInfoForNav());
   return (
     <Navbar maxWidth="xl">
       {/*The Logo*/}
@@ -33,8 +35,8 @@ export default async function Nav() {
       </NavbarContent>
       {/*Right hand side of nav*/}
       <NavbarContent justify="end">
-        {session?.user ? (
-          <UserMenu user={session.user} />
+        {userInfo ? (
+          <UserMenu user={userInfo} />
         ) : (
           <>
             <Button variant="bordered" as={Link} href="/login">

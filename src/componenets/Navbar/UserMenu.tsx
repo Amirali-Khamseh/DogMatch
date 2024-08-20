@@ -14,7 +14,7 @@ import Link from "next/link";
 import React from "react";
 
 type Props = {
-  user: Session["user"];
+  user: { name: string | null; image: string | null } | null;
 };
 
 export default function UserMenu({ user }: Props) {
@@ -38,7 +38,7 @@ export default function UserMenu({ user }: Props) {
             className="h-14 flex flex-row"
             aria-label="username"
           >
-            Signed in as {user?.name}
+            Hi {user?.name} 🐶
           </DropdownItem>
         </DropdownSection>
         <DropdownItem as={Link} href="/members/edit">

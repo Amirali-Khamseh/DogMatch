@@ -1,6 +1,6 @@
 "use client";
 import LikeButton from "@/componenets/LikeButton";
-import { calculateAge } from "@/lib/util";
+import { calculateAge, transformImageUrl } from "@/lib/util";
 import { Card, CardFooter, Image } from "@nextui-org/react";
 import { Member } from "@prisma/client";
 import Link from "next/link";
@@ -19,7 +19,12 @@ export default function MemberCard({ member, likeIds }: Props) {
   };
   return (
     <Card as={Link} href={`/members/${member.userId}`} isPressable>
-      <Image isZoomed alt={member.name} width={300} src={member.image || ""} />
+      <Image
+        isZoomed
+        alt={member.name}
+        width={300}
+        src={transformImageUrl(member.image) || ""}
+      />
       <div onClick={preventLinkAction}>
         <div className="absolute top-3 right-3 z-10">
           <LikeButton targetId={member.userId} hasLiked={hasLiked} />
