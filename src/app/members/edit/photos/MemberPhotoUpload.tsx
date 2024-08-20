@@ -1,7 +1,8 @@
 "use client";
 
 import { addImage } from "@/app/actions/useActions";
-import ImageUploadButton from "@/componenets/ImageUploadButton";
+import ImageUploadButton from "@/componenets/ProfilePhotos/ImageUploadButton";
+
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -15,7 +16,7 @@ export default function MemberPhotoUpload() {
       await addImage(result.info.secure_url, result.info.public_id);
       router.refresh();
     } else {
-      toast.error("Problem adding image");
+      toast.error("Image could not be added !!!");
     }
   };
 

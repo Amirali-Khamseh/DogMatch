@@ -9,6 +9,7 @@ import PinButton from "@/componenets/ProfilePhotos/PinButton";
 import { CardHeader, Divider, CardBody, Image } from "@nextui-org/react";
 import React from "react";
 import MemberPhotoUpload from "./MemberPhotoUpload";
+import MemberImage from "./MemberImage";
 
 export default async function page() {
   const userId = await getAuthUserId();
@@ -26,12 +27,7 @@ export default async function page() {
           {photos &&
             photos.map((photo) => (
               <div key={photo.id} className="relative">
-                <Image
-                  width={220}
-                  height={220}
-                  src={photo.url}
-                  alt={`${member?.name} photos`}
-                />
+                <MemberImage photo={photo} />
                 <div className="absolute top-3 left-3 z-50">
                   <PinButton selected={true} loading={false} />
                 </div>
