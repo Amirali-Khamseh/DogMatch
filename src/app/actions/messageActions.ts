@@ -139,7 +139,7 @@ export async function getMessagesByContainer(container: string) {
     throw error;
   }
 }
-
+/*Deleting message for only sender  */
 export async function deleteMessage(messageId: string, isOutbox: boolean) {
   const selector = isOutbox ? "senderDeleted" : "recipientDeleted";
 
