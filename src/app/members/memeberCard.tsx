@@ -1,5 +1,6 @@
 "use client";
 import LikeButton from "@/componenets/LikeButton";
+import PresenceDot from "@/componenets/PresenceDot";
 import { calculateAge, transformImageUrl } from "@/lib/util";
 import { Card, CardFooter, Image } from "@nextui-org/react";
 import { Member } from "@prisma/client";
@@ -38,7 +39,10 @@ export default function MemberCard({ member, likeIds }: Props) {
               {calculateAge(member.dateOFBirth)}
             </span>
           </div>
-          <span className="text-sm">{member.city}</span>
+          <span className="text-sm">
+            {member.city}
+            <PresenceDot member={member} />
+          </span>
         </div>
       </CardFooter>
     </Card>
