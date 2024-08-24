@@ -35,7 +35,6 @@ export const usePresenceChannel = () => {
   useEffect(() => {
     if (!channelRef.current) {
       channelRef.current = pusherClient.subscribe("presence-nm");
-
       channelRef.current.bind(
         "pusher:subscription_succeeded",
         (members: Members) => {
@@ -59,7 +58,7 @@ export const usePresenceChannel = () => {
     }
 
     return () => {
-      if (channelRef.current) {
+      if (channelRef.current && channelRef.current.subscribed) {
         channelRef.current.unsubscribe();
         channelRef.current.unbind(
           "pusher:subscription_succeeded",

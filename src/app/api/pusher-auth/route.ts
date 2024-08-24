@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return new Response("Unauthorized", { status: 401 });
+      return new Response("Unauthorised", { status: 401 });
     }
 
     const body = await request.formData();
@@ -18,10 +18,8 @@ export async function POST(request: Request) {
       user_id: session.user.id,
     };
 
-    const authResponse = pusherServer.authorizeChannel(socketId, channel, data);
+    const authResonse = pusherServer.authorizeChannel(socketId, channel, data);
 
-    return NextResponse.json(authResponse);
-  } catch (error) {
-    console.log("Pusher ERROR : " + error);
-  }
+    return NextResponse.json(authResonse);
+  } catch (error) {}
 }

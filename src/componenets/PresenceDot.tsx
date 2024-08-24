@@ -17,12 +17,13 @@ export default function PresenceDot({ member }: Props) {
   if (!isOnline) return null;
 
   return (
-    <>
-      <GoDot
-        size={36}
-        className="fill-white absolute -top-[2px] -right-[2px]"
-      />
-      <GoDotFill size={32} className="fill-green-500 animate-pulse" />
-    </>
+    <GoDotFill
+      size={32}
+      style={{
+        color: "#00ff09",
+        border: "6px solid white",
+        borderRadius: "50%",
+      }}
+    />
   );
 }
