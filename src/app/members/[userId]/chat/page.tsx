@@ -3,6 +3,8 @@ import ChatForm from "./chatForm";
 import { getMessageThread } from "@/app/actions/messageActions";
 import MessageBox from "./MessageBox";
 import { getAuthUserId } from "@/app/actions/authActions";
+import MessageList from "./MessageList";
+import { createChatId } from "@/lib/util";
 
 export default async function MemberDetailsPage({
   params,
@@ -11,22 +13,13 @@ export default async function MemberDetailsPage({
 }) {
   const messages = await getMessageThread(params.userId);
   const userId = await getAuthUserId();
+  const chatId = createChatId(userId, params.userId);
   const body = (
-    <div>
-      {messages.length === 0 ? (
-        "No messages to display"
-      ) : (
-        <div>
-          {messages.map((message) => (
-            <MessageBox
-              key={message.id}
-              message={message}
-              currentUserId={userId}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    <MessageList
+      initialMessages={messages}
+      chatId={chatId}
+      currentUserId={userId}
+    />
   );
 
   return (

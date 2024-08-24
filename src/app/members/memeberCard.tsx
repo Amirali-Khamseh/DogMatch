@@ -1,5 +1,6 @@
 "use client";
 import LikeButton from "@/componenets/LikeButton";
+import PresenceDot from "@/componenets/PresenceDot";
 import { calculateAge, transformImageUrl } from "@/lib/util";
 import { Card, CardFooter, Image } from "@nextui-org/react";
 import { Member } from "@prisma/client";
@@ -30,6 +31,9 @@ export default function MemberCard({ member, likeIds }: Props) {
           <LikeButton targetId={member.userId} hasLiked={hasLiked} />
         </div>
       </div>
+      <div className="absolute top-3 left-3 z-10">
+        <PresenceDot member={member} />
+      </div>
       <CardFooter className="flex justify-start bg-dark-gradient overflow-hidden absolute bottom-0 z-10">
         <div className="flex flex-col text-white">
           <div>
@@ -38,7 +42,7 @@ export default function MemberCard({ member, likeIds }: Props) {
               {calculateAge(member.dateOFBirth)}
             </span>
           </div>
-          <span className="text-sm">{member.city}</span>
+          <span className="text-sm ">{member.city}</span>
         </div>
       </CardFooter>
     </Card>
