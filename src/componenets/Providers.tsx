@@ -4,8 +4,16 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { usePresenceChannel } from "../../hooks/usePresenceChannel";
-export default function Providers({ children }: { children: React.ReactNode }) {
+import { useNotificationChannel } from "../../hooks/useNotificationChannel";
+export default function Providers({
+  children,
+  userId,
+}: {
+  children: React.ReactNode;
+  userId: string | null;
+}) {
   usePresenceChannel();
+  useNotificationChannel(userId);
   return (
     <NextUIProvider>
       <ToastContainer position="top-right" className="z-50" hideProgressBar />
