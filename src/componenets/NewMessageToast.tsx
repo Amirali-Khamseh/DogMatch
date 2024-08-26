@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 import { Image } from "@nextui-org/react";
 import { transformImageUrl } from "@/lib/util";
-import { toast } from "react-toastify";
 
 type Props = {
   message: MessageDto;
@@ -32,7 +31,3 @@ export default function NewMessageToast({ message }: Props) {
     </Link>
   );
 }
-
-// export const newMessageToast = (message: MessageDto) => {
-//     toast(<NewMessageToast message={message} />)
-// }
