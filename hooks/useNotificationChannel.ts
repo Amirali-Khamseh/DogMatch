@@ -49,7 +49,7 @@ export const useNotificationChannel = (userId: string | null) => {
     }
 
     return () => {
-      if (channelRef.current) {
+      if (channelRef.current && channelRef.current.subscribed) {
         channelRef.current.unsubscribe();
         channelRef.current.unbind("message:new", handleNewMessage);
         channelRef.current.unbind("like:new", handleNewLike);
