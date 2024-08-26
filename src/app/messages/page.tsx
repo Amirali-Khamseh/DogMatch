@@ -16,7 +16,7 @@ export default async function MessagesPage({
         <MessageSidebar />
       </div>
       <div className="w-[70%]">
-        <MessageTable messages={messages} />
+        <MessageTable initialMessages={messages} />
       </div>
     </div>
   );

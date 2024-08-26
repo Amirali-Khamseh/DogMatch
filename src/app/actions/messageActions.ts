@@ -176,6 +176,23 @@ export async function deleteMessage(messageId: string, isOutbox: boolean) {
     throw error;
   }
 }
+/*Getting the number of unread message  */
+export async function getUnreadMessageCount() {
+  try {
+    const userId = await getAuthUserId();
+
+    return prisma.message.count({
+      where: {
+        recipientId: userId,
+        dateRead: null,
+        recipientDeleted: false,
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+
 const messageSelect = {
   id: true,
   text: true,
