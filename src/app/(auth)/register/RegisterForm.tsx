@@ -1,96 +1,115 @@
 "use client";
-import { registerUser } from "@/app/actions/authActions";
-import { registerSchema, RegisterSchema } from "@/lib/schemas/RegisterSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Input,
-  user,
-} from "@nextui-org/react";
 
-import React from "react";
-import { useForm } from "react-hook-form";
-import { BsPersonLock } from "react-icons/bs";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Card, CardHeader, CardBody, Button, Input } from "@nextui-org/react";
+import React, { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+
+import UserDetailsForm from "./UserDetailsForm";
+import ProfileForm from "./ProfileForm";
+import { useRouter } from "next/navigation";
+import {
+  profileSchema,
+  RegisterSchema,
+  registerSchema,
+} from "@/lib/schemas/RegisterSchema";
+import { CiLock } from "react-icons/ci";
+import { registerUser } from "@/app/actions/authActions";
+import { handleFormServerErrors } from "@/lib/util";
+
+const stepSchemas = [registerSchema, profileSchema];
 
 export default function RegisterForm() {
-  const {
-    register,
-    setError,
-    handleSubmit,
-    formState: { errors, isValid, isSubmitting },
-  } = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
+  const router = useRouter();
+  const [activeStep, setActiveStep] = useState(0);
+  const currentValidationSchema = stepSchemas[activeStep];
+
+  const methods = useForm<RegisterSchema>({
+    resolver: zodResolver(currentValidationSchema),
     mode: "onTouched",
   });
-  const onSubmit = async (data: RegisterSchema) => {
-    const result = await registerUser(data);
+
+  const {
+    handleSubmit,
+    getValues,
+    setError,
+    formState: { errors, isValid, isSubmitting },
+  } = methods;
+
+  const onSubmit = async () => {
+    const result = await registerUser(getValues());
+
     if (result.status === "success") {
-      console.log("user registered successfully");
+      router.push("/register/success");
     } else {
-      if (Array.isArray(result.error)) {
-        result.error.forEach((item) => {
-          const fieldName = item.path.join(".") as
-            | "email"
-            | "name"
-            | "password";
-          setError(fieldName, { message: item.message });
-        });
-      } else {
-        setError("root.ServerError", { message: result.error });
-      }
+      handleFormServerErrors(result, setError);
+    }
+  };
+
+  const getStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return <UserDetailsForm />;
+      case 1:
+        return <ProfileForm />;
+      default:
+        return "Unknown step";
+    }
+  };
+
+  const onBack = () => {
+    setActiveStep((prev) => prev - 1);
+  };
+
+  const onNext = async () => {
+    if (activeStep === stepSchemas.length - 1) {
+      await onSubmit();
+    } else {
+      setActiveStep((prev) => prev + 1);
     }
   };
 
   return (
-    <Card className="w-2/5 mx-auto ">
-      <CardHeader className="flex justify-center">
-        <BsPersonLock size={30} />
+    <Card className="w-2/5 mx-auto">
+      <CardHeader className="flex flex-col items-center justify-center">
+        <div className="flex flex-col gap-2 items-center">
+          <div className="flex flex-row items-center gap-3">
+            <CiLock size={30} />
+            <h1 className="text-3xl">Register</h1>
+          </div>
+        </div>
       </CardHeader>
       <CardBody>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            <Input
-              label="Email"
-              variant="bordered"
-              {...register("email")}
-              isInvalid={!!errors.email}
-              errorMessage={errors.email?.message as string}
-            />
-            <Input
-              label="Password"
-              variant="bordered"
-              type="password"
-              {...register("password")}
-              isInvalid={!!errors.password}
-              errorMessage={errors.password?.message as string}
-            />
-            <Input
-              label="Name"
-              variant="bordered"
-              {...register("name")}
-              isInvalid={!!errors.name}
-              errorMessage={errors.name?.message as string}
-            />
-            {errors.root?.ServerError && (
-              <p className="text-danger text-sm">
-                {errors.root.ServerError.message}
-              </p>
-            )}
-            <Button
-              isLoading={isSubmitting}
-              isDisabled={!isValid}
-              fullWidth
-              type="submit"
-              variant="flat"
-              color="primary"
-            >
-              Register
-            </Button>
-          </div>
-        </form>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onNext)}>
+            <div className="space-y-4">
+              {getStepContent(activeStep)}
+              {errors.root?.serverError && (
+                <p className="text-danger text-sm">
+                  {errors.root.serverError.message}
+                </p>
+              )}
+              <div className="flex flex-row items-center gap-6">
+                {activeStep !== 0 && (
+                  <Button onClick={onBack} fullWidth>
+                    Back
+                  </Button>
+                )}
+                <Button
+                  isLoading={isSubmitting}
+                  isDisabled={!isValid}
+                  fullWidth
+                  color="success"
+                  type="submit"
+                >
+                  {activeStep === stepSchemas.length - 1
+                    ? "Submit"
+                    : "Continue"}
+                </Button>
+              </div>
+            </div>
+          </form>
+        </FormProvider>
       </CardBody>
     </Card>
   );
