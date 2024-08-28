@@ -1,14 +1,13 @@
 "use server";
 
-import { MessageSchema, messageSchema } from "@/lib/schemas/MessageSchema";
-import { ActionResult, MessageDto, MessageWithSenderRecipient } from "@/types";
-import { Message } from "@prisma/client";
+import { ActionResult, MessageDto } from "@/types";
 import { getAuthUserId } from "./authActions";
 import { prisma } from "@/lib/prisma";
 import { mapMessageToMessageDto } from "@/lib/mappings";
-import { createChatId } from "@/lib/util";
 import { pusherServer } from "@/lib/pusher";
-/*Sending a message and creating a relative field in db */
+import { createChatId } from "@/lib/util";
+import { MessageSchema, messageSchema } from "@/lib/schemas/MessageSchema";
+
 export async function createMessage(
   recipientUserId: string,
   data: MessageSchema
@@ -31,6 +30,7 @@ export async function createMessage(
       },
       select: messageSelect,
     });
+
     const messageDto = mapMessageToMessageDto(message);
 
     await pusherServer.trigger(
@@ -46,10 +46,11 @@ export async function createMessage(
 
     return { status: "success", data: messageDto };
   } catch (error) {
+    console.log(error);
     return { status: "error", error: "Something went wrong" };
   }
 }
-/*Getting the thread of a conversation  */
+
 export async function getMessageThread(recipientId: string) {
   try {
     const userId = await getAuthUserId();
@@ -106,11 +107,16 @@ export async function getMessageThread(recipientId: string) {
 
     return { messages: messagesToReturn, readCount };
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
-/*Getting the relative container messages */
-export async function getMessagesByContainer(container: string) {
+
+export async function getMessagesByContainer(
+  container?: string | null,
+  cursor?: string,
+  limit = 10
+) {
   try {
     const userId = await getAuthUserId();
 
@@ -122,19 +128,37 @@ export async function getMessagesByContainer(container: string) {
     };
 
     const messages = await prisma.message.findMany({
-      where: conditions,
+      where: {
+        ...conditions,
+        ...(cursor ? { created: { lte: new Date(cursor) } } : {}),
+      },
       orderBy: {
         created: "desc",
       },
       select: messageSelect,
+      take: limit + 1,
     });
 
-    return messages.map((message) => mapMessageToMessageDto(message));
+    let nextCursor: string | undefined;
+
+    if (messages.length > limit) {
+      const nextItem = messages.pop();
+      nextCursor = nextItem?.created.toISOString();
+    } else {
+      nextCursor = undefined;
+    }
+
+    const messagesToReturn = messages.map((message) =>
+      mapMessageToMessageDto(message)
+    );
+
+    return { messages: messagesToReturn, nextCursor };
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
-/*Deleting message for only sender  */
+
 export async function deleteMessage(messageId: string, isOutbox: boolean) {
   const selector = isOutbox ? "senderDeleted" : "recipientDeleted";
 
@@ -173,10 +197,11 @@ export async function deleteMessage(messageId: string, isOutbox: boolean) {
       });
     }
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
-/*Getting the number of unread message  */
+
 export async function getUnreadMessageCount() {
   try {
     const userId = await getAuthUserId();
@@ -189,6 +214,7 @@ export async function getUnreadMessageCount() {
       },
     });
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
