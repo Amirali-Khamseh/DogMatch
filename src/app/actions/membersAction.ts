@@ -6,14 +6,13 @@ import { GetMemberParams, PaginatedResponse, UserFilters } from "@/types";
 import { Member, Photo } from "@prisma/client";
 import { addYears } from "date-fns";
 import { getAuthUserId } from "./authActions";
+import { Members } from "pusher-js";
 
 export async function getMembers({
-  ageRange = "18,100",
+  ageRange = "1,50",
   gender = "male,female",
-  orderBy = "updatedAt",
   pageNumber = "1",
   pageSize = "12",
-  withPhoto = "true",
 }: GetMemberParams): Promise<PaginatedResponse<Member>> {
   const userId = await getAuthUserId();
 
@@ -21,7 +20,6 @@ export async function getMembers({
   const currentDate = new Date();
   const minDob = addYears(currentDate, -maxAge - 1);
   const maxDob = addYears(currentDate, -minAge);
-
   const selectedGender = gender.split(",");
 
   const page = parseInt(pageNumber);
@@ -36,7 +34,6 @@ export async function getMembers({
           { dateOFBirth: { gte: minDob } },
           { dateOFBirth: { lte: maxDob } },
           { gender: { in: selectedGender } },
-          ...(withPhoto === "true" ? [{ image: { not: null } }] : []),
         ],
         NOT: {
           userId,
@@ -50,13 +47,11 @@ export async function getMembers({
           { dateOFBirth: { gte: minDob } },
           { dateOFBirth: { lte: maxDob } },
           { gender: { in: selectedGender } },
-          ...(withPhoto === "true" ? [{ image: { not: null } }] : []),
         ],
         NOT: {
           userId,
         },
       },
-      orderBy: { ["updatedAt"]: "desc" },
       skip,
       take: limit,
     });
