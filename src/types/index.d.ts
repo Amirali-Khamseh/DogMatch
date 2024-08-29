@@ -33,9 +33,7 @@ type MessageDto = {
 };
 type UserFilters = {
   ageRange: number[];
-  orderBy: string;
   gender: string[];
-  withPhoto: boolean;
 };
 
 type PagingParams = {

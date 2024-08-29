@@ -5,7 +5,7 @@ export default function EmptyState() {
   return (
     <div className="flex justify-center items-center mt-20">
       <Card className="p-5">
-        <CardHeader className="text-3xl text-secondary">
+        <CardHeader className="text-3xl">
           There are no results for this filter
         </CardHeader>
         <CardBody className="text-center">

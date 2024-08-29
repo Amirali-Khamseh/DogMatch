@@ -10,10 +10,8 @@ type FilterState = {
 const useFilterStore = create<FilterState>()(
   devtools((set) => ({
     filters: {
-      ageRange: [18, 100],
+      ageRange: [1, 50],
       gender: ["male", "female"],
-      orderBy: "updated",
-      withPhoto: true,
     },
     setFilters: (filterName, value) =>
       set((state) => {

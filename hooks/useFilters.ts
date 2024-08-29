@@ -29,13 +29,13 @@ export const useFilters = () => {
     })
   );
 
-  const { gender, ageRange, orderBy, withPhoto } = filters;
+  const { gender, ageRange } = filters;
 
   useEffect(() => {
-    if (gender || ageRange || orderBy || withPhoto) {
+    if (gender || ageRange) {
       setPage(1);
     }
-  }, [gender, ageRange, orderBy, setPage, withPhoto]);
+  }, [gender, ageRange, setPage]);
 
   useEffect(() => {
     startTransition(() => {
@@ -43,23 +43,12 @@ export const useFilters = () => {
 
       if (gender) searchParams.set("gender", gender.join(","));
       if (ageRange) searchParams.set("ageRange", ageRange.toString());
-      if (orderBy) searchParams.set("orderBy", orderBy);
       if (pageSize) searchParams.set("pageSize", pageSize.toString());
       if (pageNumber) searchParams.set("pageNumber", pageNumber.toString());
-      searchParams.set("withPhoto", withPhoto.toString());
 
       router.replace(`${pathname}?${searchParams}`);
     });
-  }, [
-    ageRange,
-    orderBy,
-    gender,
-    router,
-    pathname,
-    pageNumber,
-    pageSize,
-    withPhoto,
-  ]);
+  }, [ageRange, gender, router, pathname, pageNumber, pageSize]);
 
   const orderByList = [
     { label: "Last active", value: "updated" },
@@ -75,12 +64,6 @@ export const useFilters = () => {
     setFilters("ageRange", value);
   };
 
-  const handleOrderSelect = (value: Selection) => {
-    if (value instanceof Set) {
-      setFilters("orderBy", value.values().next().value);
-    }
-  };
-
   const handleGenderSelect = (value: string) => {
     if (gender.includes(value))
       setFilters(
@@ -90,17 +73,11 @@ export const useFilters = () => {
     else setFilters("gender", [...gender, value]);
   };
 
-  const handleWithPhotoToggle = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilters("withPhoto", e.target.checked);
-  };
-
   return {
     orderByList,
     genderList,
     selectAge: handleAgeSelect,
     selectGender: handleGenderSelect,
-    selectOrder: handleOrderSelect,
-    selectWithPhoto: handleWithPhotoToggle,
     filters,
     clientLoaded,
     isPending,

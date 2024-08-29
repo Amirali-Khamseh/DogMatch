@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Select,
-  SelectItem,
-  Slider,
-  Spinner,
-  Switch,
-} from "@nextui-org/react";
+import { Button, Slider, Spinner } from "@nextui-org/react";
 import { useFilters } from "../../../hooks/useFilters";
 
 export default function Filters() {
@@ -17,11 +10,9 @@ export default function Filters() {
     filters,
     selectAge,
     selectGender,
-    selectOrder,
     clientLoaded,
     isPending,
     totalCount,
-    selectWithPhoto,
   } = useFilters();
 
   return (
@@ -55,39 +46,12 @@ export default function Filters() {
           label={clientLoaded && "Age range"}
           color="primary"
           size="sm"
-          minValue={18}
-          maxValue={100}
+          minValue={1}
+          maxValue={50}
           defaultValue={filters.ageRange}
           onChangeEnd={(value) => selectAge(value as number[])}
           aria-label="Age range slider"
         />
-      </div>
-      <div className="flex flex-col items-center">
-        <p className="text-sm">With photo</p>
-        <Switch
-          color="primary"
-          defaultSelected
-          size="sm"
-          onChange={selectWithPhoto}
-        />
-      </div>
-      <div className="w-1/4">
-        <Select
-          size="sm"
-          fullWidth
-          label="Order by"
-          variant="bordered"
-          color="primary"
-          aria-label="Order by selector"
-          selectedKeys={new Set([filters.orderBy])}
-          onSelectionChange={selectOrder}
-        >
-          {orderByList.map((item) => (
-            <SelectItem key={item.value} value={item.value}>
-              {item.label}
-            </SelectItem>
-          ))}
-        </Select>
       </div>
     </div>
   );
