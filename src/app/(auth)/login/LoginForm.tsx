@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { error } from "console";
 import Link from "next/link";
+import SocialLogin from "./SocialLogin";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -64,6 +65,7 @@ export default function LoginForm() {
             >
               Login
             </Button>
+            <SocialLogin />
             <div className="flex justify-center text-primary-500 hover:underline text-sm">
               <Link href="/forgot-password">I forgot my password</Link>
             </div>
