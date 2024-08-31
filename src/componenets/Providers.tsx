@@ -10,9 +10,11 @@ import { getUnreadMessageCount } from "@/app/actions/messageActions";
 export default function Providers({
   children,
   userId,
+  profileComplete,
 }: {
   children: React.ReactNode;
   userId: string | null;
+  profileComplete: boolean;
 }) {
   const isUnreadCountSet = useRef(false);
   const { updateUnreadCount } = useMessageStore((state) => ({
@@ -34,8 +36,8 @@ export default function Providers({
       isUnreadCountSet.current = true;
     }
   }, [setUnreadCount, userId]);
-  usePresenceChannel(userId);
-  useNotificationChannel(userId);
+  usePresenceChannel(userId, profileComplete);
+  useNotificationChannel(userId, profileComplete);
   return (
     <NextUIProvider>
       <ToastContainer position="top-right" className="z-50" hideProgressBar />

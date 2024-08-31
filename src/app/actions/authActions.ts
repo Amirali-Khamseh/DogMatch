@@ -1,11 +1,12 @@
 "use server";
 
 import { auth, signIn, signOut } from "@/auth";
-import { sendVerificationEmail } from "@/lib/mail";
+import { sendPasswordResetEmail, sendVerificationEmail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
 import { LoginSchema } from "@/lib/schemas/LoginSchema";
 import {
   combinedRegisterSchema,
+  ProfileSchema,
   registerSchema,
   RegisterSchema,
 } from "@/lib/schemas/RegisterSchema";
@@ -173,6 +174,113 @@ export async function verifyEmail(
     await prisma.token.delete({ where: { id: existingToken.id } });
 
     return { status: "success", data: "Success" };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function generateResetPasswordEmail(
+  email: string
+): Promise<ActionResult<string>> {
+  try {
+    const existingUser = await getUserByEmail(email);
+
+    if (!existingUser) {
+      return { status: "error", error: "NOT A VALID REQUEST" };
+    }
+
+    const token = await generateToken(email, TokenType.PASSWORD_RESET);
+
+    await sendPasswordResetEmail(token.email, token.token);
+
+    return {
+      status: "success",
+      data: "Password reset email has been sent.  Please check your emails",
+    };
+  } catch (error) {
+    console.log(error);
+    return { status: "error", error: "Something went wrong" };
+  }
+}
+export async function resetPassword(
+  password: string,
+  token: string | null
+): Promise<ActionResult<string>> {
+  try {
+    if (!token) return { status: "error", error: "Missing token" };
+
+    const existingToken = await getTokenByToken(token);
+
+    if (!existingToken) {
+      return { status: "error", error: "Invalid token" };
+    }
+
+    const hasExpired = new Date() > existingToken.expires;
+
+    if (hasExpired) {
+      return { status: "error", error: "Token has expired" };
+    }
+
+    const existingUser = await getUserByEmail(existingToken.email);
+
+    if (!existingUser) {
+      return { status: "error", error: "User not found" };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await prisma.user.update({
+      where: { id: existingUser.id },
+      data: { passwordHash: hashedPassword },
+    });
+
+    await prisma.token.delete({
+      where: { id: existingToken.id },
+    });
+
+    return {
+      status: "success",
+      data: "Password updated successfully.  Please try logging in",
+    };
+  } catch (error) {
+    console.log(error);
+    return { status: "error", error: "Something went wrong" };
+  }
+}
+export async function completeSocialLoginProfile(
+  data: ProfileSchema
+): Promise<ActionResult<string>> {
+  const session = await auth();
+
+  if (!session?.user) return { status: "error", error: "User not found" };
+
+  try {
+    const user = await prisma.user.update({
+      where: { id: session.user.id },
+      data: {
+        profileComplete: true,
+        member: {
+          create: {
+            name: session.user.name as string,
+            image: session.user.image,
+            gender: data.gender,
+            dateOFBirth: new Date(data.dateOFBirth),
+            description: data.description,
+            city: data.city,
+            country: data.country,
+          },
+        },
+      },
+      select: {
+        accounts: {
+          select: {
+            provider: true,
+          },
+        },
+      },
+    });
+
+    return { status: "success", data: user.accounts[0].provider };
   } catch (error) {
     console.log(error);
     throw error;

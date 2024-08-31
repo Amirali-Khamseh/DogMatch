@@ -13,6 +13,8 @@ export async function sendVerificationEmail(email: string, token: string) {
             <h1>Verify your email address</h1>
             <p>Click the link below to verify your email address</p>
             <a href="${link}">Verify email</a>
+            <br />
+            <p>With ❤️ , DogMatch </p>
         `,
   });
 }
@@ -28,6 +30,8 @@ export async function sendPasswordResetEmail(email: string, token: string) {
             <h1>You have requested to reset your password</h1>
             <p>Click the link below to reset password</p>
             <a href="${link}">Reset password</a>
+            <br />
+            <p>With ❤️ , DogMatch </p>
         `,
   });
 }
