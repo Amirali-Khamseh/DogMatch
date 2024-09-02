@@ -3,7 +3,7 @@ import PaginationComponent from "@/componenets/PaginationComponent";
 import { GetMemberParams } from "@/types";
 import { fetchCurrentUserLikeIds } from "../actions/likeactions";
 import { getMembers } from "../actions/membersAction";
-import MemberCard from "./MemeberCard";
+import MemberCard from "./memeberCard";
 
 export default async function MembersPage({
   searchParams,

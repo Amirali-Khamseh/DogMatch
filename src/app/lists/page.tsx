@@ -3,7 +3,7 @@ import {
   fetchLikedMembers,
 } from "../actions/likeactions";
 import ListsTab from "./ListTab";
-
+export const dynamic = "force-dynamic";
 export default async function ListsPage({
   searchParams,
 }: {

@@ -5,7 +5,7 @@ import { Member } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useTransition } from "react";
 import { Key } from "react";
-import MemberCard from "../members/MemeberCard";
+import MemberCard from "../members/memeberCard";
 
 type Props = {
   members: Member[];
