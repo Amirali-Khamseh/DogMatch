@@ -9,7 +9,7 @@ export async function getUnapprovedPhotos() {
   try {
     const role = await getUserRole();
 
-    if (role !== "ADMIN") throw new Error("Forbidden");
+    if (role !== "ADMIN") throw new Error("AccessForbidden");
 
     return prisma.photo.findMany({
       where: {
