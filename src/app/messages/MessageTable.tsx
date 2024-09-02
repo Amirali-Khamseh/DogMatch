@@ -82,7 +82,7 @@ export default function MessageTable({ initialMessages, nextCursor }: Props) {
         </Table>
         <div className="sticky bottom-0 pb-3 mr-3 text-right">
           <Button
-            color="secondary"
+            color="primary"
             isLoading={loadingMore}
             isDisabled={!hasMore}
             onClick={loadMore}
