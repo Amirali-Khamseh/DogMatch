@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export default async function Home() {
   const session = await auth();
   return (
-    <div className="flex flex-row justify-center items-center mt-20 gap-3">
+    <div className="flex flex-col w-full md:flex-row justify-center items-center mt-20 gap-3">
       <Image
-        src="https://res.cloudinary.com/drc6sxenk/image/upload/v1725370248/ipf2nipez4l0e4ehdrun.jpg"
+        src="https://res.cloudinary.com/drc6sxenk/image/upload/v1725452346/mubunrslkbeih0y6edyh.jpg"
         width={500}
         height={500}
         alt="two loving dog"

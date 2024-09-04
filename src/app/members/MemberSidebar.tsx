@@ -24,7 +24,7 @@ export default function MemberSidebar({ member, navLinks }: Props) {
   const pathname = usePathname();
 
   return (
-    <Card className="w-full mt-10 items-center ">
+    <Card className="w-full mt-10 items-center">
       <Image
         height={200}
         width={200}

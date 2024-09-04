@@ -30,7 +30,8 @@ export default async function Nav() {
   const links = session?.user.role === "ADMIN" ? adminLinks : memberLinks;
   return (
     <div className="flex flex-col justify-center items-center">
-      <Navbar maxWidth="xl">
+      {/*Desktop Nav */}
+      <Navbar maxWidth="lg">
         {/*The Logo*/}
         <NavbarBrand as={Link} href="/">
           <PiDogBold size={14} />
@@ -40,11 +41,13 @@ export default async function Nav() {
           </div>
         </NavbarBrand>
         {/*Center of nav*/}
+
         <NavbarContent justify="center">
           {links.map((item) => (
             <NavLink key={item.href} href={item.href} label={item.label} />
           ))}
         </NavbarContent>
+
         {/*Right hand side of nav*/}
         <NavbarContent justify="end">
           {userInfo ? (
@@ -61,6 +64,7 @@ export default async function Nav() {
           )}
         </NavbarContent>
       </Navbar>
+
       <FiltersWrapper />
     </div>
   );

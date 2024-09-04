@@ -21,11 +21,11 @@ export default async function Layout({
   ];
   if (!member) return notFound();
   return (
-    <div className="grid grid-cols-12 gap-5  px-[10%]">
-      <div className="col-span-3">
+    <div className="flex  flex-col gap-5 md:flex-row justify-center items-center  h-[580px]">
+      <div className="col-span-3 h-full">
         <MemberSidebar member={member} navLinks={navLinks} />
       </div>
-      <div className="col-span-8 flex flex-col">
+      <div className=" flex flex-col h-full">
         <div className="flex-grow mt-10">
           <Card className="w-full h-full">{children}</Card>
         </div>
