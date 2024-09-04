@@ -13,14 +13,19 @@ export default async function Layout({ children }: { children: ReactNode }) {
     { name: "Edit Profile", href: `${basePath}` },
     { name: "Update Photos", href: `${basePath}/photos` },
   ];
+
   if (!member) return notFound();
+
   return (
-    <div className="grid grid-cols-12 gap-5  px-[10%]">
-      <div className="col-span-3">
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:px-[5%] lg:px-[10%]">
+      {/* Sidebar: Stacked on small screens, occupies 3/12 on medium and larger screens */}
+      <div className="col-span-1 md:col-span-3">
         <MemberSidebar member={member} navLinks={navLinks} />
       </div>
-      <div className="col-span-8 flex flex-col">
-        <div className="flex-grow mt-10">
+
+      {/* Content Area: Full width on small screens, 8/12 on medium and larger */}
+      <div className="col-span-1 md:col-span-9 flex flex-col">
+        <div className="flex-grow mt-5 md:mt-10">
           <Card className="w-full h-full">{children}</Card>
         </div>
       </div>

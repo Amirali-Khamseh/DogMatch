@@ -14,6 +14,7 @@ import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
 import { getUserInfoForNav } from "@/app/actions/useActions";
 import FiltersWrapper from "./FiltersWrapper";
+import "./style.css";
 
 export default async function Nav() {
   const session = await auth();
@@ -31,7 +32,7 @@ export default async function Nav() {
   return (
     <div className="flex flex-col justify-center items-center">
       {/*Desktop Nav */}
-      <Navbar maxWidth="lg">
+      <Navbar maxWidth="xl">
         {/*The Logo*/}
         <NavbarBrand as={Link} href="/">
           <PiDogBold size={14} />
@@ -42,7 +43,7 @@ export default async function Nav() {
         </NavbarBrand>
         {/*Center of nav*/}
 
-        <NavbarContent justify="center">
+        <NavbarContent justify="center" className="navbar-content">
           {links.map((item) => (
             <NavLink key={item.href} href={item.href} label={item.label} />
           ))}
@@ -62,6 +63,16 @@ export default async function Nav() {
               </Button>
             </>
           )}
+        </NavbarContent>
+      </Navbar>
+      <Navbar>
+        <NavbarContent
+          justify="center"
+          className="navbar-content-center-mobile"
+        >
+          {links.map((item) => (
+            <NavLink key={item.href} href={item.href} label={item.label} />
+          ))}
         </NavbarContent>
       </Navbar>
 
