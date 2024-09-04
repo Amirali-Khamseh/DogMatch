@@ -14,6 +14,7 @@ import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
 import { getUserInfoForNav } from "@/app/actions/useActions";
 import FiltersWrapper from "./FiltersWrapper";
+import "./style.css";
 
 export default async function Nav() {
   const session = await auth();
@@ -30,6 +31,7 @@ export default async function Nav() {
   const links = session?.user.role === "ADMIN" ? adminLinks : memberLinks;
   return (
     <div className="flex flex-col justify-center items-center">
+      {/*Desktop Nav */}
       <Navbar maxWidth="xl">
         {/*The Logo*/}
         <NavbarBrand as={Link} href="/">
@@ -40,11 +42,13 @@ export default async function Nav() {
           </div>
         </NavbarBrand>
         {/*Center of nav*/}
-        <NavbarContent justify="center">
+
+        <NavbarContent justify="center" className="navbar-content">
           {links.map((item) => (
             <NavLink key={item.href} href={item.href} label={item.label} />
           ))}
         </NavbarContent>
+
         {/*Right hand side of nav*/}
         <NavbarContent justify="end">
           {userInfo ? (
@@ -61,6 +65,17 @@ export default async function Nav() {
           )}
         </NavbarContent>
       </Navbar>
+      <Navbar>
+        <NavbarContent
+          justify="center"
+          className="navbar-content-center-mobile"
+        >
+          {links.map((item) => (
+            <NavLink key={item.href} href={item.href} label={item.label} />
+          ))}
+        </NavbarContent>
+      </Navbar>
+
       <FiltersWrapper />
     </div>
   );

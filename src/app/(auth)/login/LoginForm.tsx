@@ -3,13 +3,11 @@ import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import React from "react";
 import { CiLock } from "react-icons/ci";
 import { useForm } from "react-hook-form";
-import { any } from "zod";
 import { loginSchema, LoginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInUser } from "@/app/actions/authActions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { error } from "console";
 import Link from "next/link";
 import SocialLogin from "./SocialLogin";
 
@@ -33,7 +31,7 @@ export default function LoginForm() {
     }
   };
   return (
-    <Card className="w-2/5 mx-auto ">
+    <Card className="w-[90%] md:w-2/5 mx-auto ">
       <CardHeader className="flex justify-center">
         <CiLock size={30} />
       </CardHeader>
