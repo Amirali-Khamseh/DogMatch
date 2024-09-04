@@ -40,4 +40,8 @@ Cloudinary is the primary solution for cloud storage, handling user images and g
 
 An admin role and panel are available for managing user-uploaded images, including the ability to approve or reject content based on policy compliance.
 
+
+![image](https://github.com/user-attachments/assets/78ff1a62-e1b0-42b8-bee4-d7d068b7fe3d)
+
+
 Feel free to explore DogMatch and help make every puppy’s day a little brighter! 🐕🌟
