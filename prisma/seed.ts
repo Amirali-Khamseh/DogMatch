@@ -43,7 +43,7 @@ async function seedAdmin() {
       email: "amiralikhamseh01@gmail.com",
       emailVerified: new Date(),
       name: "Admin",
-      passwordHash: await hash("password", 10),
+      passwordHash: await hash("AdminDogMatchPass", 10),
       role: "ADMIN",
     },
   });
