@@ -38,7 +38,8 @@ export default function LoginForm() {
       <CardBody>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            <Input
+            {/*The email provider --- resend --- doesn't support the vercel domains , so i will not use the email based logging functionality and its corresponding services*/}
+            {/* <Input
               label="Email"
               variant="bordered"
               {...register("email")}
@@ -62,11 +63,11 @@ export default function LoginForm() {
               isLoading={isSubmitting}
             >
               Login
-            </Button>
+            </Button> */}
             <SocialLogin />
-            <div className="flex justify-center text-primary-500 hover:underline text-sm">
+            {/* <div className="flex justify-center text-primary-500 hover:underline text-sm">
               <Link href="/forgot-password">I forgot my password</Link>
-            </div>
+            </div> */}
           </div>
         </form>
       </CardBody>
