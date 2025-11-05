@@ -8,6 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import UserDetailsForm from "./UserDetailsForm";
 import ProfileForm from "./ProfileForm";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import {
   profileSchema,
   RegisterSchema,
@@ -40,7 +41,21 @@ export default function RegisterForm() {
     const result = await registerUser(getValues());
 
     if (result.status === "success") {
-      router.push("/register/success");
+      // Try to sign the user in automatically after successful registration.
+      const values = getValues();
+      const signInResult = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      // If sign in succeeded, go to members; otherwise fall back to success page
+      if (signInResult && (signInResult as any).ok) {
+        router.push("/members");
+        router.refresh();
+      } else {
+        router.push("/register/success");
+      }
     } else {
       handleFormServerErrors(result, setError);
     }
