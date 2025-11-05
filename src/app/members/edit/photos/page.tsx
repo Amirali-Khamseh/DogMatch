@@ -18,13 +18,13 @@ export default async function page() {
   const photos = await getMemberPhotosByUserId(userId);
   return (
     <div>
-      <CardHeader className="flex justify-between">
-        <p className="text-xl font-semibold "> Gallery </p>
+      <CardHeader className="flex flex-col sm:flex-row justify-between items-center gap-2 p-4">
+        <p className="text-lg md:text-xl font-semibold">Gallery</p>
         <MemberPhotoUpload />
       </CardHeader>
 
       <Divider />
-      <CardBody>
+      <CardBody className="p-2 sm:p-4">
         <MemberPhotos
           photos={photos}
           editing={true}

@@ -85,7 +85,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <Card className="w-[90%] md:w-2/5 mx-auto">
+    <Card className="w-[95%] sm:w-[90%] md:w-3/5 lg:w-2/5 mx-auto">
       <CardHeader className="flex flex-col items-center justify-center">
         <div className="flex flex-col gap-2 items-center">
           <div className="flex flex-row items-center gap-3">

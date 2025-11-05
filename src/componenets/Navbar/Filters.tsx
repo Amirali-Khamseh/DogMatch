@@ -16,9 +16,9 @@ export default function Filters() {
   } = useFilters();
 
   return (
-    <div className=" shadow-lg py-4 flex w-full justify-center gap-8">
+    <div className="shadow-lg py-4 px-4 flex flex-col md:flex-row w-full justify-center gap-4 md:gap-8 items-center">
       <div className="flex gap-2 items-center">
-        <div className=" text-medium">
+        <div className="text-sm md:text-medium">
           {isPending ? (
             <Spinner size="sm" color="secondary" />
           ) : (
@@ -27,8 +27,8 @@ export default function Filters() {
         </div>
       </div>
 
-      <div className="flex gap-2 items-center">
-        <div>Gender:</div>
+      <div className="flex gap-2 items-center flex-wrap justify-center">
+        <div className="text-sm md:text-base">Gender:</div>
         {genderList.map(({ icon: Icon, value }) => (
           <Button
             key={value}
@@ -41,7 +41,7 @@ export default function Filters() {
           </Button>
         ))}
       </div>
-      <div className="flex flex-row items-center gap-2 w-1/4">
+      <div className="flex flex-row items-center gap-2 w-full md:w-1/2 lg:w-1/4 px-4 md:px-0">
         <Slider
           label={clientLoaded && "Age range"}
           color="primary"

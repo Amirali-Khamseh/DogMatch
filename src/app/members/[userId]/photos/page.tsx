@@ -15,10 +15,12 @@ export default async function MemberDetailsPage({
   if (!photos) return notFound();
   return (
     <>
-      <CardHeader className="text-xl font-semibold">Photo</CardHeader>
+      <CardHeader className="text-lg md:text-xl font-semibold p-4">
+        Photo
+      </CardHeader>
       <Divider />
-      <CardBody>
-        <div className="grid grid-cols-5 gap-3">
+      <CardBody className="p-2 sm:p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {photos &&
             photos.map((photo) => (
               <div key={photo.id}>

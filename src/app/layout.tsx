@@ -19,7 +19,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Providers userId={userId} profileComplete={profileComplete}>
           <Nav />
-          <div className="container mx-auto mt-[64px]">{children}</div>
+          <div className="container mx-auto mt-[64px] px-2 sm:px-4">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

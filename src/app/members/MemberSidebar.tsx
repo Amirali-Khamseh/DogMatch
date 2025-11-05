@@ -24,7 +24,7 @@ export default function MemberSidebar({ member, navLinks }: Props) {
   const pathname = usePathname();
 
   return (
-    <Card className="w-full mt-10 items-center">
+    <Card className="w-full mt-4 md:mt-10 items-center">
       <Image
         height={200}
         width={200}
@@ -32,10 +32,10 @@ export default function MemberSidebar({ member, navLinks }: Props) {
         alt="User profile main image"
         className="rounded-full mt-6 aspect-square object-cover"
       />
-      <CardBody>
+      <CardBody className="w-full">
         <div className="flex flex-col items-center">
           <div className="flex">
-            <div className="text-2xl">
+            <div className="text-xl md:text-2xl">
               {member.name}, {calculateAge(member.dateOFBirth)}
             </div>
             <div>
@@ -48,7 +48,7 @@ export default function MemberSidebar({ member, navLinks }: Props) {
           </div>
         </div>
         <Divider className="my-3" />
-        <nav className="flex flex-col p-4 ml-4 text-2xl gap-4">
+        <nav className="flex flex-col p-2 md:p-4 md:ml-4 text-lg md:text-2xl gap-3 md:gap-4">
           {navLinks.map((link) => (
             <Link
               href={link.href}

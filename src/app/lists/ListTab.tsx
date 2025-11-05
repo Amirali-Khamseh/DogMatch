@@ -33,11 +33,16 @@ export default function ListsTab({ members, likeIds }: Props) {
   }
 
   return (
-    <div className="flex flex-col w-full justify-center items-center">
+    <div className="flex flex-col w-full justify-center items-center px-4">
       <Tabs
         aria-label="Like tabs"
         items={tabs}
         onSelectionChange={(key) => handleTabChange(key)}
+        className="w-full"
+        classNames={{
+          tabList: "flex-wrap",
+          tab: "text-xs sm:text-sm md:text-base",
+        }}
       >
         {(item) => (
           <Tab key={item.id} title={item.label}>
@@ -46,7 +51,7 @@ export default function ListsTab({ members, likeIds }: Props) {
             ) : (
               <>
                 {members.length > 0 ? (
-                  <div className="flex justify-center items-center gap-2 flex-wrap">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-center items-center p-4">
                     {members.map((member) => (
                       <MemberCard
                         key={member.id}

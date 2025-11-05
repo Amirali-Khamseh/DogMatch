@@ -19,7 +19,7 @@ export default async function MembersPage({
         <EmptyState />
       ) : (
         <>
-          <div className="m-10 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8">
+          <div className="m-4 sm:m-6 md:m-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
             {members &&
               members.map((member) => (
                 <MemberCard member={member} key={member.id} likeIds={likeIds} />

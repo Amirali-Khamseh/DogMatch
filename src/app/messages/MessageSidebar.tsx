@@ -31,19 +31,22 @@ export default function MessageSidebar() {
   };
 
   return (
-    <div className="flex flex-col shadow-md rounded-lg cursor-pointer">
+    <div className="flex flex-row md:flex-col shadow-md rounded-lg cursor-pointer">
       {items.map(({ key, icon: Icon, label, chip }) => (
         <div
           key={key}
-          className={clsx("flex flex-row items-center rounded-t-lg gap-2 p-3", {
-            "text-slate-500 font-extrabold ": selected === key,
-            "text-black hover:text-slate-400/70": selected !== key,
-          })}
+          className={clsx(
+            "flex flex-row items-center rounded-t-lg gap-2 p-3 flex-1 md:flex-none justify-center md:justify-start",
+            {
+              "text-slate-500 font-extrabold ": selected === key,
+              "text-black hover:text-slate-400/70": selected !== key,
+            }
+          )}
           onClick={() => handleSelect(key)}
         >
           <Icon size={24} />
           <div className="flex justify-between flex-grow">
-            <span>{label}</span>
+            <span className="hidden sm:inline">{label}</span>
             {chip && <Chip>{unreadCount}</Chip>}
           </div>
         </div>

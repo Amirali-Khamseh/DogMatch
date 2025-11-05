@@ -54,7 +54,10 @@ export default function Editform({ member }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col space-y-4 p-4"
+    >
       <Input
         label="Name"
         variant="bordered"
@@ -72,7 +75,7 @@ export default function Editform({ member }: Props) {
         errorMessage={errors.description?.message}
         minRows={6}
       />
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <Input
           label="City"
           variant="bordered"
@@ -92,7 +95,7 @@ export default function Editform({ member }: Props) {
       </div>
       <Button
         type="submit"
-        className="flex self-end"
+        className="flex self-end w-full sm:w-auto"
         variant="solid"
         isDisabled={!isValid || !isDirty}
         isLoading={isSubmitting}

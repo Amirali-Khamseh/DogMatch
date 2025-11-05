@@ -31,7 +31,7 @@ export default function LoginForm() {
     }
   };
   return (
-    <Card className="w-[90%] md:w-2/5 mx-auto ">
+    <Card className="w-[95%] sm:w-[90%] md:w-3/5 lg:w-2/5 mx-auto ">
       <CardHeader className="flex justify-center">
         <CiLock size={30} />
       </CardHeader>

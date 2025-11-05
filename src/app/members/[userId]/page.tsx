@@ -11,9 +11,13 @@ export default async function MemberDetailsPage({
   if (!member) return notFound();
   return (
     <>
-      <CardHeader className="text-xl font-semibold">Profile</CardHeader>
+      <CardHeader className="text-lg md:text-xl font-semibold">
+        Profile
+      </CardHeader>
       <Divider />
-      <CardBody>{member.description}</CardBody>
+      <CardBody className="p-4 text-sm md:text-base">
+        {member.description}
+      </CardBody>
     </>
   );
 }

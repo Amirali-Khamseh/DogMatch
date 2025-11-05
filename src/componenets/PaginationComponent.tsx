@@ -30,25 +30,30 @@ export default function PaginationComponent({
 
   return (
     <div className="w-full">
-      <div className="flex flex-row justify-center w-full gap-8 items-center py-5">
-        <div className="text-center">{resultText}</div>
+      <div className="flex flex-col md:flex-row justify-center w-full gap-4 md:gap-8 items-center py-5 px-4">
+        <div className="text-center text-sm md:text-base">{resultText}</div>
         <Pagination
           total={totalPages}
           color="primary"
           page={pageNumber}
           variant="bordered"
           onChange={setPage}
+          size="sm"
+          className="md:size-md"
         />
-        <div className="flex flex-row gap-2 items-center text-center">
-          Page size:
+        <div className="flex flex-row gap-2 items-center text-center text-sm md:text-base">
+          <span className="hidden sm:inline">Page size:</span>
           {[3, 6, 12].map((size) => (
             <div
               key={size}
               onClick={() => setPageSize(size)}
-              className={clsx("page-size-box cursor-pointer", {
-                "bg-primary rounded-lg p-2 text-white hover:bg-primary-200 hover:text-white":
-                  pageSize === size,
-              })}
+              className={clsx(
+                "page-size-box cursor-pointer px-2 py-1 md:px-3 md:py-2",
+                {
+                  "bg-primary rounded-lg text-white hover:bg-primary-200 hover:text-white":
+                    pageSize === size,
+                }
+              )}
             >
               {size}
             </div>

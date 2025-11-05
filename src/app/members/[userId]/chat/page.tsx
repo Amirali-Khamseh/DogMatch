@@ -23,11 +23,13 @@ export default async function MemberDetailsPage({
   );
 
   return (
-    <div className="h-[550px] overflow-y-scroll">
-      <CardHeader className="text-xl font-semibold ">Chat</CardHeader>
+    <div className="h-[400px] sm:h-[500px] md:h-[550px] overflow-y-scroll">
+      <CardHeader className="text-lg md:text-xl font-semibold ">
+        Chat
+      </CardHeader>
       <Divider />
-      <CardBody>{body}</CardBody>
-      <CardFooter className="pb-2">
+      <CardBody className="p-2 sm:p-4">{body}</CardBody>
+      <CardFooter className="pb-2 px-2 sm:px-4">
         <ChatForm />
       </CardFooter>
     </div>
