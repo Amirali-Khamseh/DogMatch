@@ -1,7 +1,7 @@
 "use server";
 
 import { auth, signIn, signOut } from "@/auth";
-import { sendPasswordResetEmail, sendVerificationEmail } from "@/lib/mail";
+import { sendPasswordResetEmail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
 import { LoginSchema } from "@/lib/schemas/LoginSchema";
 import {
@@ -24,20 +24,7 @@ export async function signInUser(
 
     if (!existingUser || !existingUser.email)
       return { status: "error", error: "Invalid credentials" };
-
-    if (!existingUser.emailVerified) {
-      const token = await generateToken(
-        existingUser.email,
-        TokenType.VERIFICATION
-      );
-
-      await sendVerificationEmail(token.email, token.token);
-
-      return {
-        status: "error",
-        error: "Please verify your email address before logging in",
-      };
-    }
+    // Allow sign in without requiring email verification (email provider is not available)
     const result = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -96,6 +83,8 @@ export async function registerUser(
         name,
         email,
         passwordHash: hashedPassword,
+        // mark user as verified immediately since email verification is disabled
+        emailVerified: new Date(),
         profileComplete: true,
         member: {
           create: {
@@ -109,16 +98,6 @@ export async function registerUser(
         },
       },
     });
-
-    const verificationToken = await generateToken(
-      email,
-      TokenType.VERIFICATION
-    );
-
-    await sendVerificationEmail(
-      verificationToken.email,
-      verificationToken.token
-    );
 
     return { status: "success", data: user };
   } catch (error) {
