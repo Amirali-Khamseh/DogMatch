@@ -18,7 +18,9 @@ export default function NavLink({ href, label }: Props) {
     <NavbarItem isActive={pathname === href}>
       <Link href={href} className="flex items-center">
         {label}
-        {href === "/messages" && <span className="ml-1">💌{unreadCount}</span>}
+        {href === "/messages" && unreadCount > 0 && (
+          <span className="ml-1">💌{unreadCount}</span>
+        )}
       </Link>
     </NavbarItem>
   );

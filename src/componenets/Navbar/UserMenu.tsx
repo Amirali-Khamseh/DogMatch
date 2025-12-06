@@ -41,7 +41,7 @@ export default function UserMenu({ user }: Props) {
             Hi {user?.name} 🐶
           </DropdownItem>
         </DropdownSection>
-        <DropdownItem key="edit-profile" href="/members/edit">
+        <DropdownItem key="edit-profile" as={Link} href="/members/edit">
           Edit profile
         </DropdownItem>
         <DropdownItem color="danger" onClick={async () => signOutUser()}>

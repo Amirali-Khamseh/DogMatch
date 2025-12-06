@@ -21,32 +21,32 @@ export default function MemberCard({ member, likeIds }: Props) {
   return (
     <Link href={`/members/${member.userId}`}>
       <Card isPressable>
-      <Image
-        isZoomed
-        alt={member.name}
-        width={300}
-        src={transformImageUrl(member.image) || ""}
-      />
-      <div onClick={preventLinkAction}>
-        <div className="absolute top-3 right-3 z-10">
-          <LikeButton targetId={member.userId} hasLiked={hasLiked} />
-        </div>
-      </div>
-      <div className="absolute top-3 left-3 z-10">
-        <PresenceDot member={member} />
-      </div>
-      <CardFooter className="flex justify-start bg-dark-gradient overflow-hidden absolute bottom-0 z-10">
-        <div className="flex flex-col text-white">
-          <div>
-            <span className="font-semibold mr-2">{member.name}</span>
-            <span className="font-bold">
-              {calculateAge(member.dateOFBirth)}
-            </span>
+        <Image
+          isZoomed
+          alt={member.name}
+          width={300}
+          src={transformImageUrl(member.image) || ""}
+        />
+        <div onClick={preventLinkAction}>
+          <div className="absolute top-3 right-3 z-10">
+            <LikeButton targetId={member.userId} hasLiked={hasLiked} />
           </div>
-          <span className="text-sm ">{member.city}</span>
         </div>
-      </CardFooter>
-    </Card>
+        <div className="absolute top-3 left-3 z-10">
+          <PresenceDot member={member} />
+        </div>
+        <CardFooter className="flex justify-start bg-dark-gradient overflow-hidden absolute bottom-0 z-10">
+          <div className="flex flex-col text-white">
+            <div>
+              <span className="font-semibold mr-2">{member.name}</span>
+              <span className="font-bold">
+                {calculateAge(member.dateOFBirth)}
+              </span>
+            </div>
+            <span className="text-sm ">{member.city}</span>
+          </div>
+        </CardFooter>
+      </Card>
     </Link>
   );
 }

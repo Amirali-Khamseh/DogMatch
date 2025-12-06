@@ -1,24 +1,11 @@
-import {
-  Button,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@nextui-org/react";
-
-import Link from "next/link";
 import React from "react";
-import { PiDogBold } from "react-icons/pi";
-import NavLink from "./NavLink";
-import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
 import { getUserInfoForNav } from "@/app/actions/useActions";
-import FiltersWrapper from "./FiltersWrapper";
-import "./style.css";
+import NavClient from "./NavClient";
 
 export default async function Nav() {
   const session = await auth();
-  const userInfo = session?.user && (await getUserInfoForNav());
+  const userInfo = session?.user ? await getUserInfoForNav() : null;
 
   const memberLinks = [
     { href: "/members", label: "Matches" },
@@ -29,58 +16,6 @@ export default async function Nav() {
   const adminLinks = [{ href: "/admin/moderation", label: "Photo Moderation" }];
 
   const links = session?.user.role === "ADMIN" ? adminLinks : memberLinks;
-  return (
-    <div className="flex flex-col justify-center items-center">
-      {/*Desktop Nav */}
-      <Navbar maxWidth="xl">
-        {/*The Logo*/}
-        <NavbarBrand as={Link} href="/">
-          <PiDogBold size={14} />
-          <div className="font-bold text-inherit">
-            <span>Dog</span>
-            <span>Match</span>
-          </div>
-        </NavbarBrand>
-        {/*Center of nav*/}
-
-        <NavbarContent justify="center" className="navbar-content">
-          {links.map((item) => (
-            <NavLink key={item.href} href={item.href} label={item.label} />
-          ))}
-        </NavbarContent>
-
-        {/*Right hand side of nav*/}
-        <NavbarContent justify="end">
-          {userInfo ? (
-            <UserMenu user={userInfo} />
-          ) : (
-            <>
-              <NavbarItem>
-                <Button as={Link} href="/login" variant="bordered">
-                  Login
-                </Button>
-              </NavbarItem>
-              <NavbarItem>
-                <Button as={Link} href="/register" variant="bordered">
-                  Register
-                </Button>
-              </NavbarItem>
-            </>
-          )}
-        </NavbarContent>
-      </Navbar>
-      <Navbar>
-        <NavbarContent
-          justify="center"
-          className="navbar-content-center-mobile"
-        >
-          {links.map((item) => (
-            <NavLink key={item.href} href={item.href} label={item.label} />
-          ))}
-        </NavbarContent>
-      </Navbar>
-
-      <FiltersWrapper />
-    </div>
-  );
+  
+  return <NavClient userInfo={userInfo} links={links} />;
 }
