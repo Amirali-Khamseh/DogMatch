@@ -8,9 +8,10 @@ import MemberCard from "./memeberCard";
 export default async function MembersPage({
   searchParams,
 }: {
-  searchParams: GetMemberParams;
+  searchParams: Promise<GetMemberParams>;
 }) {
-  const { items: members, totalCount } = await getMembers(searchParams);
+  const params = await searchParams;
+  const { items: members, totalCount } = await getMembers(params);
   const likeIds = await fetchCurrentUserLikeIds();
 
   return (

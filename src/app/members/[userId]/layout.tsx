@@ -9,9 +9,10 @@ export default async function Layout({
   params,
 }: {
   children: ReactNode;
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }) {
-  const member = await getMemberByUserId(params.userId);
+  const { userId } = await params;
+  const member = await getMemberByUserId(userId);
   const basePath = `/members/${member?.userId}`;
 
   const navLinks = [

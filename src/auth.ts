@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/prisma";
 import authConfig from "./auth.config";
 import { Role } from "@prisma/client";
+import type { Adapter } from "next-auth/adapters";
 export const {
   handlers: { GET, POST },
   auth,
@@ -26,7 +27,7 @@ export const {
       return session;
     },
   },
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   session: { strategy: "jwt" },
   ...authConfig,
 });

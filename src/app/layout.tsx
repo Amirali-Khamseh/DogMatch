@@ -16,7 +16,7 @@ export default async function RootLayout({
   const profileComplete = session?.user.profileComplete as boolean;
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <Providers userId={userId} profileComplete={profileComplete}>
           <Nav />
           <div className="container mx-auto mt-[64px] px-2 sm:px-4">

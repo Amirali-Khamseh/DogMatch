@@ -15,9 +15,11 @@ export default function NavLink({ href, label }: Props) {
   }));
 
   return (
-    <NavbarItem isActive={pathname === href} as={Link} href={href}>
-      <span>{label}</span>
-      {href === "/messages" && <span className="ml-1">💌{unreadCount}</span>}
+    <NavbarItem isActive={pathname === href}>
+      <Link href={href} className="flex items-center">
+        {label}
+        {href === "/messages" && <span className="ml-1">💌{unreadCount}</span>}
+      </Link>
     </NavbarItem>
   );
 }

@@ -19,7 +19,8 @@ export default function MemberCard({ member, likeIds }: Props) {
     e.stopPropagation();
   };
   return (
-    <Card as={Link} href={`/members/${member.userId}`} isPressable>
+    <Link href={`/members/${member.userId}`}>
+      <Card isPressable>
       <Image
         isZoomed
         alt={member.name}
@@ -46,5 +47,6 @@ export default function MemberCard({ member, likeIds }: Props) {
         </div>
       </CardFooter>
     </Card>
+    </Link>
   );
 }

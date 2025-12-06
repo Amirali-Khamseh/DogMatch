@@ -5,9 +5,10 @@ import { CardBody, CardHeader, Divider } from "@nextui-org/react";
 export default async function MemberDetailsPage({
   params,
 }: {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }) {
-  const member = await getMemberByUserId(params.userId);
+  const { userId } = await params;
+  const member = await getMemberByUserId(userId);
   if (!member) return notFound();
   return (
     <>

@@ -9,11 +9,12 @@ import { createChatId } from "@/lib/util";
 export default async function MemberDetailsPage({
   params,
 }: {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }) {
-  const messages = await getMessageThread(params.userId);
+  const { userId: memberUserId } = await params;
+  const messages = await getMessageThread(memberUserId);
   const userId = await getAuthUserId();
-  const chatId = createChatId(userId, params.userId);
+  const chatId = createChatId(userId, memberUserId);
   const body = (
     <MessageList
       initialMessages={messages}

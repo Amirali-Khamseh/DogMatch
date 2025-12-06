@@ -6,10 +6,11 @@ import MessageTable from "./MessageTable";
 export default async function MessagesPage({
   searchParams,
 }: {
-  searchParams: { container: string };
+  searchParams: Promise<{ container: string }>;
 }) {
+  const params = await searchParams;
   const { messages, nextCursor } = await getMessagesByContainer(
-    searchParams.container
+    params.container
   );
   console.log({ messages });
 

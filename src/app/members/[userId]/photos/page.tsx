@@ -9,9 +9,10 @@ import { CardBody, CardHeader, Divider, Image } from "@nextui-org/react";
 export default async function MemberDetailsPage({
   params,
 }: {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }) {
-  const photos = await getMemberPhotosByUserId(params.userId);
+  const { userId } = await params;
+  const photos = await getMemberPhotosByUserId(userId);
   if (!photos) return notFound();
   return (
     <>

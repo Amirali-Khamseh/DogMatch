@@ -36,7 +36,7 @@ export default async function Nav() {
         {/*The Logo*/}
         <NavbarBrand as={Link} href="/">
           <PiDogBold size={14} />
-          <div>
+          <div className="font-bold text-inherit">
             <span>Dog</span>
             <span>Match</span>
           </div>
@@ -55,12 +55,16 @@ export default async function Nav() {
             <UserMenu user={userInfo} />
           ) : (
             <>
-              <Button variant="bordered" as={Link} href="/login">
-                Login
-              </Button>
-              <Button variant="bordered" as={Link} href="/register">
-                Register
-              </Button>
+              <NavbarItem>
+                <Button as={Link} href="/login" variant="bordered">
+                  Login
+                </Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button as={Link} href="/register" variant="bordered">
+                  Register
+                </Button>
+              </NavbarItem>
             </>
           )}
         </NavbarContent>
