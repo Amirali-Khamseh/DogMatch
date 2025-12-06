@@ -16,6 +16,6 @@ export default async function Nav() {
   const adminLinks = [{ href: "/admin/moderation", label: "Photo Moderation" }];
 
   const links = session?.user.role === "ADMIN" ? adminLinks : memberLinks;
-  
+
   return <NavClient userInfo={userInfo} links={links} />;
 }
