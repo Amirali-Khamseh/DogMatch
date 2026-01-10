@@ -1,4 +1,6 @@
-# DogMatch 🐶❤️
+# As of the beginning of 2026, this project will no longer be maintained and will be added to the archive.
+
+## DogMatch 🐶❤️
 
 DogMatch is a dating app designed to ensure no puppy is left lonely!
 Here's a quick overview of the application's features and technologies:
