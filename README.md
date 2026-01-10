@@ -1,4 +1,4 @@
-# As of the beginning of 2026, this project will no longer be maintained and will be added to the archive.
+# ⚠️As of the beginning of 2026, this project will no longer be maintained and will be added to the archive.
 
 ## DogMatch 🐶❤️
 
